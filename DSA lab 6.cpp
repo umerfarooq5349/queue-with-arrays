@@ -1,91 +1,75 @@
 #include<iostream>
 using namespace std;
-class DynIntQueue
-{
-private:
-	struct QueueNode
-	{
-		int value;
-		QueueNode* next;
-	};
-	QueueNode* front;
-	QueueNode* rear;
-	int numItems;
+
+#define size 10
+class Queue {
+	int* list;
+	int front;
+	int back;
+	int numitems;
 public:
-	DynIntQueue(void);
-	~DynIntQueue(void);
-	void enqueue(int);
-	int dequeue(void);
-	bool isEmpty(void);
-	void makeNull(void);
+	Queue() {
+		list = new int[size];
+		front, back = -1;
+
+	}
+	bool isEmpty() {
+		if (front == -1) {
+			return true;
+		}
+	}
+	bool isFull() {
+		if (back > size) {
+			return true;
+		}
+	}
+	void enqueue(int a) {
+
+		if (back==(size-1)) {
+			cout << "Queue is full (:" << endl;
+		}
+		else {
+			back++;
+			list[back] = a;
+			cout << a << " is added " << endl;
+		}
+	}
+	void dequeue() {
+		if (front==-1) {
+			cout << "Queue is empty ):" << endl;
+		}
+		else {
+			front++;
+			cout << front << endl;
+		//	return front;
+		}
+	}
+	int top() {
+		if (front==-1) {
+			cout << "Queue is empty ):" << endl;
+		}
+		else {
+			return front;
+		}
+	}
 };
-DynIntQueue::DynIntQueue(void)
-{
-	front = NULL;
-	rear = NULL;
-	numItems = 0;
-}
-DynIntQueue::~DynIntQueue(void)
-{
-	makeNull();
-}
-void DynIntQueue::enqueue(int num)
-{
-	QueueNode* newNode;
-	newNode = new QueueNode;
-	newNode->value = num;
-	newNode->next = NULL;
-	if (isEmpty())
-	{
-		front = newNode;
-		rear = newNode;
+int main() {
+	Queue q1;
+	for (int i = 0; i < 10; i++) {
+		q1.enqueue(i);
+		cout << endl;
 	}
-	else
-	{
-		rear->next = newNode;
-		rear = newNode;
-	}
-	numItems++;
-}
-int DynIntQueue::dequeue(void)
-{
-	QueueNode* temp;
-	int num;
-	if (isEmpty())
-		cout << "The queue is empty.\n";
-	else
-	{
-		num = front->value;
-		temp = front->next;
-		delete front;
-		front = temp;
-		numItems--;
-	}
-	return num;
-}
-bool DynIntQueue::isEmpty(void)
-{
-	if (numItems)
-		return false;
-	else
-		return true;
-}
-void DynIntQueue::makeNull()
-{
-	while (!isEmpty())
-		dequeue();
-}
-int main()
-{
-	DynIntQueue iQueue;
-	for (int x = 0; x < 5; x++)
-		iQueue.enqueue(x);
-	cout << "The values in the queue were:\n";
-	while (!iQueue.isEmpty())
-	{
-		int value;
-		value = iQueue.dequeue();
-		cout << value << endl;
+	cout << " now dequeeing all " << endl;
+	for (int i = 0; i < 10; i++) {
+		q1.dequeue();
+		q1.top();
 	}
 	return 0;
 }
+
+
+
+
+
+
+
